@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+  pull_request:
 
 jobs:
 
@@ -15,14 +16,14 @@ jobs:
       with:
         go-version: 1.16
 
-    - name: Set up golangci-lint
-      run: go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.0
-
     - name: Build
       run: go build -v ./...
 
     - name: Lint
-      run: golangci-lint run ./...
+      uses: reviewdog/action-golangci-lint@v2
+      with:
+        reporter: github-pr-review
+        fail_on_error: true
 
     - name: Test
       run: go test -v ./...

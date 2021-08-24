@@ -10,11 +10,11 @@ import (
 type osFS struct{}
 
 func (fsys *osFS) Open(name string) (fs.File, error) {
-	f, err := os.Open(name)
-	if f == nil {
+	file, err := os.Open(name)
+	if file == nil {
 		return nil, err
 	}
-	return f, err
+	return file, err
 }
 
 func (fsys *osFS) ReadDir(name string) ([]fs.DirEntry, error) {
