@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+  pull_request:
 
 jobs:
 
@@ -17,6 +18,12 @@ jobs:
 
     - name: Build
       run: go build -v ./...
+
+    - name: Lint
+      uses: reviewdog/action-golangci-lint@v2
+      with:
+        reporter: github-pr-review
+        fail_on_error: true
 
     - name: Test
       run: go test -v ./...
