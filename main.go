@@ -5,16 +5,17 @@ import (
 	"io"
 	"io/fs"
 	"os"
+	"path/filepath"
 )
 
 type osFS struct{}
 
 func (fsys *osFS) Open(name string) (fs.File, error) {
-	file, err := os.Open(name)
-	if file == nil {
+	f, err := os.Open(filepath.Clean(name))
+	if f == nil {
 		return nil, err
 	}
-	return file, err
+	return f, err
 }
 
 func (fsys *osFS) ReadDir(name string) ([]fs.DirEntry, error) {
