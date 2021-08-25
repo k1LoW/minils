@@ -1,14 +1,22 @@
 name: CI
 
 on:
-  push:
   pull_request:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+      - ready_for_review
 
 jobs:
 
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Require checkbox all filled
+      uses: pione30/checkboxes-all-filled@v1
+
     - uses: actions/checkout@v2
 
     - name: Set up Go
